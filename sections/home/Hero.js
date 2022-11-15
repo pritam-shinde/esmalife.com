@@ -12,7 +12,7 @@ const Hero = () => {
     return (
         <>
             <section>
-                <Container className='px-0' maxWidth="xxl" style={{ height: 'inherit' }}>
+                <Container className='px-0' maxWidth="xxl" style={{ height: 'inherit', paddingLeft: "0 !important", paddingRight:"0 !important" }}>
                     <Swiper spaceBetween={30}
                         centeredSlides={true}
                         autoplay={{
