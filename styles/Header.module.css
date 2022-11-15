@@ -1,0 +1,43 @@
+.navLink {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, ;
+    -webkit-transition: color 0.15s ease-in-out, ;
+    -moz-transition: color 0.15s ease-in-out, ;
+    -ms-transition: color 0.15s ease-in-out, ;
+    -o-transition: color 0.15s ease-in-out, ;
+    color: #fff;
+}
+
+.mobileMenu {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    background-color: var(--light-pestal-purple);
+    z-index: 9999;
+}
+
+@media only screen and (max-width: 1000px){
+
+    .navItem{
+        margin-bottom: 1rem;
+    }
+
+    .navLink {
+        color: var(--pestal-purple) !important;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1270px) {
+    .navLink {
+        padding: 0.7rem;
+        font-size: 0.8rem;
+    }
+}
