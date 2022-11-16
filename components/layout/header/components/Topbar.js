@@ -1,6 +1,6 @@
 import { Search, ShoppingBag } from '@mui/icons-material'
 import { Container, Grid, Box, IconButton, Badge, TextField } from '@mui/material'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 import React from 'react'
 import Logo from '../../../../public/logo/logo.webp'
@@ -9,7 +9,7 @@ import Styles from '../../../../styles/Header.module.css'
 const Topbar = () => {
     return (
         <>
-            <Container maxWidth="xxl" className='hidden lg:block py-2'>
+            <Container maxWidth="xxl" className='d-none d-lg-block py-2'>
                 <Grid container>
                     <Grid item xs={11} lg={10} className="mx-auto">
                         <Box>

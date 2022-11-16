@@ -25,9 +25,9 @@ const Hero = () => {
                         className="mySwiper">
                         <SwiperSlide className={`${Styles.Slider1} ${Styles.slide}`}>
                             <Grid container style={{ height: 'inherit' }}>
-                                <Grid item xs={11} lg={10} className="mx-auto flex items-center" style={{ height: 'inherit' }}>
+                                <Grid item xs={11} lg={10} className="mx-auto d-flex align-items-center" style={{ height: 'inherit' }}>
                                     <Box>
-                                        <Typography variant='h1' className={Styles.heroTitle}><span className={Styles.semibold}>Brilliant things happen in</span> <br /><span className={Styles.bold}>Calm Minds</span></Typography>
+                                        <Typography className={Styles.heroTitle}><span className={Styles.semibold}>Brilliant things happen in</span> <br /><span className={Styles.bold}>Calm Minds</span></Typography>
                                         <Box mt={3}>
                                             <PurpleOutlinedButton navlink={true} btnlink="/shop/" btntitle={`SHOP NOW`} />
                                         </Box>

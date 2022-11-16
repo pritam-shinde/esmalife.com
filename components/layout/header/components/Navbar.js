@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Styles from '../../../../styles/Header.module.css'
 import Logo from '../../../../public/logo/logo.webp'
 import TransparentLogo from '../../../../public/logo/logo.png'
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 const Navbar = () => {
     const [width, setWidth] = useState();
@@ -25,40 +25,40 @@ const Navbar = () => {
                     <Container maxWidth="xxl" className='bg-pestal-purple py-2'>
                         <Grid container>
                             <Grid item xs={11} lg={10} className="mx-auto">
-                                <ul className='flex'>
-                                    <li className={Styles.navItem}>
+                                <ul className='d-flex list-unstyled m-0'>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>ALL PRODUCTS</a>
+                                            <a className="nav-link text-white">ALL PRODUCTS</a>
                                         </Link>
                                     </li>
-                                    <li className={Styles.navItem}>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>GEM AND JEWELRY</a>
+                                            <a className="nav-link text-white">GEM AND JEWELRY</a>
                                         </Link>
                                     </li>
-                                    <li className={Styles.navItem}>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>HEALING KITS</a>
+                                            <a className="nav-link text-white">HEALING KITS</a>
                                         </Link>
                                     </li>
-                                    <li className={Styles.navItem}>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>CRYSTAL PENDULUMS</a>
+                                            <a className="nav-link text-white">CRYSTAL PENDULUMS</a>
                                         </Link>
                                     </li>
-                                    <li className={Styles.navItem}>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>HEALING LAMPS</a>
+                                            <a className="nav-link text-white">HEALING LAMPS</a>
                                         </Link>
                                     </li>
-                                    <li className={Styles.navItem}>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>HEALING JEWELRY</a>
+                                            <a className="nav-link text-white">HEALING JEWELRY</a>
                                         </Link>
                                     </li>
-                                    <li className={Styles.navItem}>
+                                    <li className="nav-item">
                                         <Link href="/" legacyBehavior>
-                                            <a className={Styles.navLink}>HEALING WANDS</a>
+                                            <a className="nav-link text-white">HEALING WANDS</a>
                                         </Link>
                                     </li>
                                 </ul>
@@ -115,40 +115,40 @@ const Navbar = () => {
                                         </Grid>
                                     </Box>
                                     <Box mt={3}>
-                                        <ul>
-                                            <li className={Styles.navItem}>
+                                        <ul className='list-unstyled'>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>ALL PRODUCTS</a>
+                                                    <a className="nav-link text-white">ALL PRODUCTS</a>
                                                 </Link>
                                             </li>
-                                            <li className={Styles.navItem}>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>GEM AND JEWELRY</a>
+                                                    <a className="nav-link text-white">GEM AND JEWELRY</a>
                                                 </Link>
                                             </li>
-                                            <li className={Styles.navItem}>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>HEALING KITS</a>
+                                                    <a className="nav-link text-white">HEALING KITS</a>
                                                 </Link>
                                             </li>
-                                            <li className={Styles.navItem}>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>CRYSTAL PENDULUMS</a>
+                                                    <a className="nav-link text-white">CRYSTAL PENDULUMS</a>
                                                 </Link>
                                             </li>
-                                            <li className={Styles.navItem}>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>HEALING LAMPS</a>
+                                                    <a className="nav-link text-white">HEALING LAMPS</a>
                                                 </Link>
                                             </li>
-                                            <li className={Styles.navItem}>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>HEALING JEWELRY</a>
+                                                    <a className="nav-link text-white">HEALING JEWELRY</a>
                                                 </Link>
                                             </li>
-                                            <li className={Styles.navItem}>
+                                            <li className="nav-item">
                                                 <Link href="/" legacyBehavior>
-                                                    <a className={Styles.navLink}>HEALING WANDS</a>
+                                                    <a className="nav-link text-white">HEALING WANDS</a>
                                                 </Link>
                                             </li>
                                         </ul>

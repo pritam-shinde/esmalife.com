@@ -4,7 +4,7 @@ import { Container, Grid, Box, Typography } from '@mui/material'
 const NewProduct = () => {
     return (
         <>
-            <section className='md:mt-4 mt-3'>
+            <section className='mt-md-4 mt-3'>
                 <Container maxWidth="xxl">
                     <Grid container>
                         <Grid item xs={11} lg={10} className="mx-auto">

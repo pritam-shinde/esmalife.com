@@ -11,7 +11,7 @@ import Category4 from '../../public/home/cat4.webp'
 const ShopByCategory = () => {
     return (
         <>
-            <section className='md:mt-4 mt-3'>
+            <section className='mt-md-4 mt-3'>
                 <Container maxWidth="xxl">
                     <Grid container>
                         <Grid item xs={11} lg={10} className="mx-auto">
@@ -22,7 +22,7 @@ const ShopByCategory = () => {
                                 <Box mt={3}>
                                     <Grid container spacing={3}>
                                         <Grid item xs={12} md={6}>
-                                            <Box className="relative">
+                                            <Box style={{position:"relative"}}>
                                                 <Box>
                                                     <Image src={Category1} alt="Gems and Jewellery" layout='responsive' />
                                                 </Box>
@@ -35,7 +35,7 @@ const ShopByCategory = () => {
                                             <Box>
                                                 <Grid container spacing={3}>
                                                     <Grid item xs={12}>
-                                                        <Box className="relative">
+                                                        <Box style={{position:"relative"}}>
                                                             <Box>
                                                                 <Image src={Category2} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
@@ -45,7 +45,7 @@ const ShopByCategory = () => {
                                                         </Box>
                                                     </Grid>
                                                     <Grid item xs={12} md={6}>
-                                                        <Box className="relative">
+                                                        <Box style={{position:"relative"}}>
                                                             <Box>
                                                                 <Image src={Category3} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
@@ -55,7 +55,7 @@ const ShopByCategory = () => {
                                                         </Box>
                                                     </Grid>
                                                     <Grid item xs={12} md={6}>
-                                                        <Box className="relative">
+                                                        <Box style={{position:"relative"}}>
                                                             <Box>
                                                                 <Image src={Category4} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>

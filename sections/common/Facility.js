@@ -8,40 +8,40 @@ import Image from 'next/image'
 const Facility = () => {
     return (
         <>
-            <section className='bg-light-pestal-purple'>
+            <section className='bg-light-pestal-purple mt-md-4 mt-3'>
                 <Container maxWidth="xxl">
                     <Grid container>
                         <Grid item xs={11} lg={10} className="mx-auto">
                             <Box py={5}>
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} md={6} lg={4}>
-                                        <Box className='flex'>
-                                            <Box className='shrink-0 items-center'>
+                                        <Box className='d-flex'>
+                                            <Box className='flex-shrink-0 align-items-center'>
                                                 <Image src={OriginalProduct} alt="original product" layout='responsive' />
                                             </Box>
-                                            <Box className='grow ml-5'>
+                                            <Box className='flex-grow-1 ms-3'>
                                                 <Typography variant='h5' className='mb-3 text-dark-grey'>Original Product</Typography>
                                                 <Typography className='para text-dark-grey'>100% Original product that covered warranty by the vendor.</Typography>
                                             </Box>
                                         </Box>
                                     </Grid>
                                     <Grid item xs={12} md={6} lg={4}>
-                                        <Box className='flex'>
-                                            <Box className='shrink-0 items-center'>
+                                        <Box className='d-flex'>
+                                            <Box className='flex-shrink-0 align-items-center'>
                                             <Image src={ReturnWarrenty} alt="Return Warrenty" layout='responsive' />
                                             </Box>
-                                            <Box className='grow ml-5'>
+                                            <Box className='flex-grow-1 ms-3'>
                                                 <Typography variant='h5' className='mb-3 text-dark-grey'>15 Days Return Warranty</Typography>
                                                 <Typography className='para text-dark-grey'>You have the right to return your orders within 30 days.</Typography>
                                             </Box>
                                         </Box>
                                     </Grid>
                                     <Grid item xs={12} md={6} lg={4}>
-                                        <Box className='flex'>
-                                            <Box className='shrink-0 items-center'>
+                                        <Box className='d-flex'>
+                                            <Box className='flex-shrink-0 align-items-center'>
                                             <Image src={PaymentSecure} alt="payment security" layout='responsive' />
                                             </Box>
-                                            <Box className='grow ml-5'>
+                                            <Box className='flex-grow-1 ms-3'>
                                                 <Typography variant='h5' className='mb-3 text-dark-grey'>100% Secure Payment</Typography>
                                                 <Typography className='para text-dark-grey'>Your payments are secure with our private security network.</Typography>
                                             </Box>
