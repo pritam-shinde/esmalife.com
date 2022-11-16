@@ -1,4 +1,4 @@
-import { Search, ShoppingBag } from '@mui/icons-material'
+import { Search, LocalMallOutlined } from '@mui/icons-material'
 import { Container, Grid, Box, IconButton, Badge, TextField } from '@mui/material'
 import Image from 'next/legacy/image'
 import Link from 'next/link'
@@ -11,7 +11,7 @@ const Topbar = () => {
         <>
             <Container maxWidth="xxl" className='d-none d-lg-block py-2'>
                 <Grid container>
-                    <Grid item xs={11} lg={10} className="mx-auto">
+                    <Grid item xs={12} lg={10} className="mx-auto">
                         <Box>
                             <Grid container justifyContent="space-between" alignItems="center" spacing={3}>
                                 <Grid item lg={2}>
@@ -26,7 +26,7 @@ const Topbar = () => {
                                 <Grid item lg={7}>
                                     <Box>
                                         <form>
-                                            <Box className='relative'>
+                                            <Box style={{position:"relative"}}>
                                                 <TextField id="filledbasic" className='border-0' label="Search here..." variant="filled" fullWidth required />
                                                 <IconButton type='submit' id="searchButton">
                                                     <Search />
@@ -39,7 +39,7 @@ const Topbar = () => {
                                     <IconButton>
                                         <Link href="/cart/">
                                             <Badge color='secondary' badgeContent="4">
-                                                <ShoppingBag />
+                                                <LocalMallOutlined className='text-light-grey' />
                                             </Badge>
                                         </Link>
                                     </IconButton>

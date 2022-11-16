@@ -8,7 +8,7 @@ const Footer = () => {
       <footer>
         <Container maxWidth="xxl" className='bg-dark-grey'>
           <Grid container>
-            <Grid item xs={11} lg={10} className="mx-auto">
+            <Grid item xs={12} lg={10} className="mx-auto">
               <Box py={5}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6} lg={3}>
@@ -125,7 +125,7 @@ const Footer = () => {
         </Container>
         <Container maxWidth="xxl" className='bg-grey'>
           <Grid container>
-            <Grid item xs={11} lg={10} className="mx-auto">
+            <Grid item xs={12} lg={10} className="mx-auto">
               <Box py={2}>
                 <Typography className='text-dark-grey' align='center'><Copyright /> {new Date().getFullYear()} esmalife.com | All Rights Reserved.</Typography>
               </Box>

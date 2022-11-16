@@ -1,13 +1,13 @@
-import { ArrowForward } from '@mui/icons-material'
+import React from 'react'
 import { Button } from '@mui/material'
 import Link from 'next/link'
-import React from 'react'
 import Styles from '../../styles/Button.module.css'
+import { ArrowForward } from '@mui/icons-material'
 
-const PurpleOutlinedButton = ({navlink, anchor, btntitle, btnlink, fullWidth}) => {
+const PurpleFilledBtn = ({ navlink, anchor, btntitle, btnlink, fullWidth }) => {
     return (
         <>
-            <Button className={Styles.PurpleOutlinedButton} fullWidth={fullWidth ? true : false} focusRipple>
+            <Button className={Styles.PurplefilledButton} fullWidth={fullWidth ? true : false} focusRipple>
                 {
                     navlink ? <Link href={btnlink} legacyBehavior><a>{btntitle} <ArrowForward /></a></Link> : null
                 }
@@ -19,4 +19,4 @@ const PurpleOutlinedButton = ({navlink, anchor, btntitle, btnlink, fullWidth}) =
     )
 }
 
-export default PurpleOutlinedButton
+export default PurpleFilledBtn

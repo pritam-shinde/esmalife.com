@@ -1,4 +1,4 @@
-.PurpleOutlinedButton{
+.PurpleOutlinedButton {
     padding: 0.9rem 1.8rem;
     border: 2px solid var(--pestal-purple) !important;
     border-radius: none !important;
@@ -6,19 +6,53 @@
     -moz-border-radius: none !important;
     -ms-border-radius: none !important;
     -o-border-radius: none !important;
-    color: var(--pestal-purple) !important;
     font-weight: 600 !important;
     font-size: 1.1rem;
 }
 
-.PurpleOutlinedButton:hover{
+.PurpleOutlinedButton a {
+    color: var(--pestal-purple) !important;
+}
+
+.PurpleOutlinedButton:hover {
     background-color: var(--pestal-purple);
+}
+
+.PurpleOutlinedButton:hover a {
     color: #fff !important;
 }
 
-@media only screen and (max-width: 600px){
-    .PurpleOutlinedButton{
+.PurplefilledButton{
+    padding: 0.9rem 1.8rem;
+    border: 2px solid var(--pestal-purple) !important;
+    border-radius: none !important;
+    -webkit-border-radius: none !important;
+    -moz-border-radius: none !important;
+    -ms-border-radius: none !important;
+    -o-border-radius: none !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem;
+    background-color: var(--pestal-purple) !important;
+}
+
+.PurplefilledButton a{
+    color: #fff;
+}
+
+.PurplefilledButton:hover{
+    background-color: #fff !important;
+}
+
+.PurplefilledButton:hover a{
+    color: var(--pestal-purple) !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .PurpleOutlinedButton, .PurplefilledButton {
         padding: 0.6rem 1.2rem;
+    }
+
+    .PurpleOutlinedButton a, .PurplefilledButton a{
         font-size: 1rem;
     }
 }

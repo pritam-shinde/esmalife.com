@@ -1,6 +1,6 @@
 import { Container, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 import React from 'react'
 import Category1 from '../../public/home/cat1.webp'
@@ -14,7 +14,7 @@ const ShopByCategory = () => {
             <section className='mt-md-4 mt-3'>
                 <Container maxWidth="xxl">
                     <Grid container>
-                        <Grid item xs={11} lg={10} className="mx-auto">
+                        <Grid item xs={12} lg={10} className="mx-auto">
                             <Box py={5}>
                                 <Box py={2}>
                                     <Typography variant='h2' className='text-light-grey' align='center'>SHOP BY CATEGORY</Typography>
@@ -27,7 +27,7 @@ const ShopByCategory = () => {
                                                     <Image src={Category1} alt="Gems and Jewellery" layout='responsive' />
                                                 </Box>
                                                 <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                    <Typography variant='h5'><Link href="/" legacyBehavior><a className='text-white'>GEM AND JEWELRY</a></Link></Typography>
+                                                    <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>GEM AND JEWELRY</a></Link></Typography>
                                                 </Box>
                                             </Box>
                                         </Grid>
@@ -40,7 +40,7 @@ const ShopByCategory = () => {
                                                                 <Image src={Category2} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
                                                             <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                                <Typography variant='h5'><Link href="/" legacyBehavior><a className='text-white'>HEALING JEWELRY</a></Link></Typography>
+                                                                <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>HEALING JEWELRY</a></Link></Typography>
                                                             </Box>
                                                         </Box>
                                                     </Grid>
@@ -50,7 +50,7 @@ const ShopByCategory = () => {
                                                                 <Image src={Category3} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
                                                             <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                                <Typography variant='h5'><Link href="/" legacyBehavior><a className='text-white'>HEALING WANDS</a></Link></Typography>
+                                                                <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>HEALING WANDS</a></Link></Typography>
                                                             </Box>
                                                         </Box>
                                                     </Grid>
@@ -60,7 +60,7 @@ const ShopByCategory = () => {
                                                                 <Image src={Category4} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
                                                             <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                                <Typography variant='h5'><Link href="/" legacyBehavior><a className='text-white'>HEALING KITS</a></Link></Typography>
+                                                                <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>HEALING KITS</a></Link></Typography>
                                                             </Box>
                                                         </Box>
                                                     </Grid>

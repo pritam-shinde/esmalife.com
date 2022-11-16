@@ -20,6 +20,7 @@
 
 .heroTitle{
     color: var(--pestal-purple) !important;
+    line-height: 1.4;
 }
 
 .semibold{
@@ -34,12 +35,37 @@
     letter-spacing: 1px;
 }
 .ProductBanner{
-    height: 100vh;
+    height: 80vh;
     width: 100%;
     background-image: url(../public/home/Product-Banner.webp);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+.ProductBannerTitle{
+    font-size: 4rem !important;
+    color: var(--pestal-purple) !important;
+    font-weight: 700;
+}
+
+.ProductBannerText{
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    color: var(--pestal-purple) !important;
+}
+
+.price{
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+}
+
+.NewProductBg{
+    width: 100%;
+    height: auto;
+    background-image: url(../public/home/bg.png);
+    background-repeat: no-repeat;
+    background-position: 50%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -59,7 +85,7 @@
     }
 
     .heroTitle{
-        line-height: 0.5;
+        line-height: 1.2;
     }
     
     .semibold{
@@ -67,6 +93,10 @@
     }
     
     .bold{
+        font-size: 3rem !important;
+    }
+
+    .ProductBannerTitle{
         font-size: 3rem !important;
     }
 
