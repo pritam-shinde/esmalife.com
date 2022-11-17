@@ -6,13 +6,19 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chec/commerce.js": "^2.8.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.10.9",
-    "@mui/material": "^5.10.13",
+    "@mui/icons-material": "^5.10.14",
+    "@mui/material": "^5.10.14",
+    "@stripe/react-stripe-js": "^1.15.0",
+    "@stripe/stripe-js": "^1.44.1",
+    "bootstrap": "^5.2.2",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.39.4",
+    "react-image-gallery": "^1.2.11",
     "swiper": "^8.4.4"
   },
   "devDependencies": {

@@ -1,0 +1,27 @@
+.prodName{
+    font-size: 2.5rem !important;
+    text-transform: capitalize !important;
+}
+
+.prodPrice{
+    font-size: 1.5rem !important;
+}
+
+.prodPrice span{
+    font-weight: 600 !important;
+}
+
+.description ul{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.description ul li, .description p{
+    color: var(--grey) !important;
+}
+
+@media only screen and (max-width: 600px){
+    .prodName{
+        font-size: 2rem !important;
+    }
+}

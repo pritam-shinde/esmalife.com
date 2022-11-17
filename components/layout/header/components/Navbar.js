@@ -1,4 +1,4 @@
-import { Close, Menu, ShoppingBag } from '@mui/icons-material';
+import { Close, Menu, LocalMallOutlined } from '@mui/icons-material';
 import { Badge, Container, Grid, IconButton, Box } from '@mui/material'
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
@@ -88,7 +88,7 @@ const Navbar = () => {
                                     <IconButton>
                                         <Link href="/cart/">
                                             <Badge color='secondary' badgeContent="4">
-                                                <ShoppingBag />
+                                                <LocalMallOutlined className='text-dark-grey' />
                                             </Badge>
                                         </Link>
                                     </IconButton>
