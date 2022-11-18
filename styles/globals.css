@@ -19,6 +19,8 @@
     --grey: #808080;
     --dark-grey: #2d2d2d;
     --heading-font-weight: 600;
+    --h1-desktop-size: 2.8rem;
+    --h1-mob-size: 2.3rem;
     --h2-desktop-size: 2.5rem;
     --h2-mob-size: 2rem;
     --h3-desktop-size: 1.6rem;
@@ -50,6 +52,10 @@ h6 {
     font-weight: var(--heading-font-weight) !important;
 }
 
+h1 {
+    font-size: var(--h1-desktop-size) !important;
+}
+
 h2 {
     font-size: var(--h2-desktop-size) !important;
 }
@@ -70,7 +76,7 @@ h6 {
     font-size: var(--h6-desktop-size) !important;
 }
 
-a{
+a {
     text-decoration: none !important;
 }
 
@@ -169,6 +175,10 @@ button {
 }
 
 @media only screen and (max-width:600px) {
+    h1 {
+        font-size: var(--h1-mob-size) !important;
+    }
+
     h2 {
         font-size: var(--h2-mob-size) !important;
     }

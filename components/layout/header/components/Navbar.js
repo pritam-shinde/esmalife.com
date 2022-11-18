@@ -27,37 +27,37 @@ const Navbar = () => {
                             <Grid item xs={12} lg={10} className="mx-auto">
                                 <ul className='d-flex list-unstyled m-0'>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/shop/" legacyBehavior>
                                             <a className={Styles.navLink}>ALL PRODUCTS</a>
                                         </Link>
                                     </li>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/category/gems-and-jewelry/" legacyBehavior>
                                             <a className={Styles.navLink}>GEM AND JEWELRY</a>
                                         </Link>
                                     </li>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/category/healing-kits/" legacyBehavior>
                                             <a className={Styles.navLink}>HEALING KITS</a>
                                         </Link>
                                     </li>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/category/crystal-pendulum/" legacyBehavior>
                                             <a className={Styles.navLink}>CRYSTAL PENDULUMS</a>
                                         </Link>
                                     </li>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/category/healing-lamps/" legacyBehavior>
                                             <a className={Styles.navLink}>HEALING LAMPS</a>
                                         </Link>
                                     </li>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/category/healing-jewelry/" legacyBehavior>
                                             <a className={Styles.navLink}>HEALING JEWELRY</a>
                                         </Link>
                                     </li>
                                     <li className={Styles.navItem}>
-                                        <Link href="/" legacyBehavior>
+                                        <Link href="/category/healing-wand/" legacyBehavior>
                                             <a className={Styles.navLink}>HEALING WANDS</a>
                                         </Link>
                                     </li>
@@ -117,37 +117,37 @@ const Navbar = () => {
                                     <Box mt={3}>
                                         <ul className='list-unstyled'>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/shop/" legacyBehavior>
                                                     <a className={Styles.navLink}>ALL PRODUCTS</a>
                                                 </Link>
                                             </li>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/category/gems-and-jewelry/" legacyBehavior>
                                                     <a className={Styles.navLink}>GEM AND JEWELRY</a>
                                                 </Link>
                                             </li>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/category/healing-kits/" legacyBehavior>
                                                     <a className={Styles.navLink}>HEALING KITS</a>
                                                 </Link>
                                             </li>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/category/crystal-pendulum/" legacyBehavior>
                                                     <a className={Styles.navLink}>CRYSTAL PENDULUMS</a>
                                                 </Link>
                                             </li>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/category/healing-lamps/" legacyBehavior>
                                                     <a className={Styles.navLink}>HEALING LAMPS</a>
                                                 </Link>
                                             </li>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/category/healing-jewelry/" legacyBehavior>
                                                     <a className={Styles.navLink}>HEALING JEWELRY</a>
                                                 </Link>
                                             </li>
                                             <li className={Styles.navItem}>
-                                                <Link href="/" legacyBehavior>
+                                                <Link href="/category/healing-wand/" legacyBehavior>
                                                     <a className={Styles.navLink}>HEALING WANDS</a>
                                                 </Link>
                                             </li>

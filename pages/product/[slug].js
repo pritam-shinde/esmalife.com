@@ -92,7 +92,6 @@ const SingleProduct = ({ product }) => {
                                                     <Star className='text-pestal-purple' /><Star className='text-pestal-purple' /><Star className='text-pestal-purple' /><Star className='text-pestal-purple' /><Star className='text-pestal-purple' />
                                                 </Box>
                                                 <Typography className={Styles.prodPrice}><del className='text-light-grey'>₹{product.price.raw + 200}</del> <span className='text-pestal-purple'>{product.price.formatted_with_symbol}</span></Typography>
-                                                <Box className={Styles.description} mt={3} dangerouslySetInnerHTML={{ __html: product ? product.description ? product.description : "" : null }} />
                                                 <Box mt={3} className="d-flex align-items-center">
                                                     <Box mr={3}>
                                                     <IconButton className='border rounded-circle mx-2'><Remove /></IconButton>
@@ -103,6 +102,7 @@ const SingleProduct = ({ product }) => {
                                                         <PurpleFilledBtn btnlink="/cart/" btntitle="ADD TO Cart" navlink={true} />
                                                     </Box>
                                                 </Box>
+                                                <Box className={Styles.description} mt={3} dangerouslySetInnerHTML={{ __html: product ? product.description ? product.description : "" : null }} />
                                             </Box>
                                         </Grid>
                                     </Grid>

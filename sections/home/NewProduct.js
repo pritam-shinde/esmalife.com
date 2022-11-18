@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Grid, Box, Typography } from '@mui/material'
 import Styles from '../../styles/Home.module.css'
-import { ProductCard} from '../../components/components'
+import { ProductCard } from '../../components/components'
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper";
 
-const NewProduct = ({ products }) => {
+
+const NewProduct = ({ products, addToCart }) => {
     const [width, setWidth] = useState();
     const [hydration, setHydration] = useState(false)
     const [slideCount, setSlideCount] = useState(1)
+    
 
     useEffect(() => {
         setWidth(window.innerWidth)
@@ -36,6 +38,9 @@ const NewProduct = ({ products }) => {
             setSlideCount(3)
         }
     }, [width])
+
+    
+
 
     return (
         <>{
@@ -64,7 +69,7 @@ const NewProduct = ({ products }) => {
                                         >
                                             {
                                                 products ? products.map(product => <SwiperSlide key={product.id}>
-                                                    <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} />
+                                                    <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} addToCart={addToCart} productId={product.id} />
                                                 </SwiperSlide>) : "Loading..."
                                             }
                                         </Swiper>

@@ -27,7 +27,7 @@ const ShopByCategory = () => {
                                                     <Image src={Category1} alt="Gems and Jewellery" layout='responsive' />
                                                 </Box>
                                                 <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                    <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>GEM AND JEWELRY</a></Link></Typography>
+                                                    <Typography variant='h3'><Link href="/category/gems-and-jewelry/" legacyBehavior><a className='text-white'>GEM AND JEWELRY</a></Link></Typography>
                                                 </Box>
                                             </Box>
                                         </Grid>
@@ -40,7 +40,7 @@ const ShopByCategory = () => {
                                                                 <Image src={Category2} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
                                                             <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                                <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>HEALING JEWELRY</a></Link></Typography>
+                                                                <Typography variant='h3'><Link href="/category/healing-jewelry/" legacyBehavior><a className='text-white'>HEALING JEWELRY</a></Link></Typography>
                                                             </Box>
                                                         </Box>
                                                     </Grid>
@@ -50,7 +50,7 @@ const ShopByCategory = () => {
                                                                 <Image src={Category3} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
                                                             <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                                <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>HEALING WANDS</a></Link></Typography>
+                                                                <Typography variant='h3'><Link href="/category/healing-wand/" legacyBehavior><a className='text-white'>HEALING WANDS</a></Link></Typography>
                                                             </Box>
                                                         </Box>
                                                     </Grid>
@@ -60,7 +60,7 @@ const ShopByCategory = () => {
                                                                 <Image src={Category4} alt="Gems and Jewellery" layout='responsive' />
                                                             </Box>
                                                             <Box p={2} className="bg-opac-pestal-purple categoryName">
-                                                                <Typography variant='h3'><Link href="/" legacyBehavior><a className='text-white'>HEALING KITS</a></Link></Typography>
+                                                                <Typography variant='h3'><Link href="/category/healing-kits/" legacyBehavior><a className='text-white'>HEALING KITS</a></Link></Typography>
                                                             </Box>
                                                         </Box>
                                                     </Grid>

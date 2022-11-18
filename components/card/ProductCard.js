@@ -1,10 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/legacy/image'
-import { PurpleFilledBtn } from '../../components/components'
-import { Container, Grid, Box, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 
-const ProductCard = ({image, permalink, name, raw, price}) => {
+const ProductCard = ({image, permalink, name, raw, price, addToCart, productId}) => {
     return (
         <>
             <Box>
@@ -15,7 +14,7 @@ const ProductCard = ({image, permalink, name, raw, price}) => {
                     <Typography variant='h3' align='center' gutterBottom><Link href={`/${permalink}/`} legacyBehavior><a className='text-light-grey'>{name}</a></Link></Typography>
                     <Typography variant='h4' align='center'><del className='text-light-grey'>₹ {raw + 200}</del> <span className='text-pestal-purple'>{price}</span></Typography>
                     <Box mt={3}>
-                        <PurpleFilledBtn navlink={true} btnlink="/cart/" btntitle="ADD TO CART" fullWidth={true} />
+                        <Button onClick={()=>addToCart(productId)}>ADD TO CART</Button>
                     </Box>
                 </Box>
             </Box>
