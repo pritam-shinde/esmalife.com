@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import commerce from '../../lib/commerce'
 import { useRouter } from 'next/router'
-import { Container, Grid, Box, Divider, Typography, IconButton } from '@mui/material'
+import { Container, Grid, Box, Divider, Typography, IconButton, Button } from '@mui/material'
 import Link from 'next/link'
 import { Star } from '@mui/icons-material'
 import { Remove, Add } from '@mui/icons-material'
@@ -12,7 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper";
 import Image from 'next/legacy/image'
-import { PurpleFilledBtn } from '../../components/components'
+import { useCartDispatch } from '../../context/cart'
 
 export const getServerSideProps = async ({ params }) => {
     const { slug } = params
@@ -28,7 +28,10 @@ const SingleProduct = ({ product }) => {
     const router = useRouter()
     const { slug } = router.query;
 
-    console.log(product)
+    const { setCart } = useCartDispatch()
+
+    const addToCart = (productId) => commerce.cart.add(productId).then(({ cart }) => setCart(cart))
+
     return (
         <>
             <Head>
@@ -94,12 +97,12 @@ const SingleProduct = ({ product }) => {
                                                 <Typography className={Styles.prodPrice}><del className='text-light-grey'>₹{product.price.raw + 200}</del> <span className='text-pestal-purple'>{product.price.formatted_with_symbol}</span></Typography>
                                                 <Box mt={3} className="d-flex align-items-center">
                                                     <Box mr={3}>
-                                                    <IconButton className='border rounded-circle mx-2'><Remove /></IconButton>
-                                                    <strong>1</strong>
-                                                    <IconButton className='border rounded-circle mx-2'><Add /></IconButton>
+                                                        <IconButton className='border rounded-circle mx-2'><Remove /></IconButton>
+                                                        <strong>1</strong>
+                                                        <IconButton className='border rounded-circle mx-2'><Add /></IconButton>
                                                     </Box>
                                                     <Box>
-                                                        <PurpleFilledBtn btnlink="/cart/" btntitle="ADD TO Cart" navlink={true} />
+                                                        <Button onClick={() => addToCart(product.id)}>ADD TO CART</Button>
                                                     </Box>
                                                 </Box>
                                                 <Box className={Styles.description} mt={3} dangerouslySetInnerHTML={{ __html: product ? product.description ? product.description : "" : null }} />

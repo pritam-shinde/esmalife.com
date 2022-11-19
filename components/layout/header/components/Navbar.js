@@ -6,10 +6,14 @@ import Styles from '../../../../styles/Header.module.css'
 import Logo from '../../../../public/logo/logo.webp'
 import TransparentLogo from '../../../../public/logo/logo.png'
 import Image from 'next/legacy/image';
+import { useCartState } from '../../../../context/cart';
+
 
 const Navbar = () => {
     const [width, setWidth] = useState();
     const [open, setOpen] = useState(false)
+
+    const  {total_unique_items}  = useCartState();
 
     useEffect(() => {
         setWidth(window.innerWidth)
@@ -87,7 +91,7 @@ const Navbar = () => {
                                 <Grid item xs={2}>
                                     <IconButton>
                                         <Link href="/cart/">
-                                            <Badge color='secondary' badgeContent="4">
+                                            <Badge color='secondary' badgeContent={total_unique_items}>
                                                 <LocalMallOutlined className='text-dark-grey' />
                                             </Badge>
                                         </Link>

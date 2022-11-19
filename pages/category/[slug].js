@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Divider, Container, Grid, Box, Typography, IconButton } from '@mui/material'
 import { Apps, ViewList } from '@mui/icons-material';
 import { ProductCard, PurpleFilledBtn } from '../../components/components';
-import { useRouter } from 'next/router';
+import { useCartDispatch } from '../../context/cart'
 
 export const getServerSideProps = async ({ params }) => {
     const { slug } = params;
@@ -30,6 +30,10 @@ export const getServerSideProps = async ({ params }) => {
 
 const SingleCategory = ({ category, products }) => {
     const [productView, setProductView] = useState('grid')
+
+    const { setCart } = useCartDispatch()
+
+    const addToCart = (productId) => commerce.cart.add(productId).then(({ cart }) => setCart(cart))
 
     return (
         <>
@@ -77,7 +81,7 @@ const SingleCategory = ({ category, products }) => {
                                             productView === 'grid' ? <Grid container spacing={5}>
                                                 {
                                                     products !== null ? products.map(product => <Grid key={product.id} item xs={12} sm={6} lg={4}>
-                                                        <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} />
+                                                        <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} addToCart={addToCart} productId={product.id} />
                                                     </Grid>) : <Box mt={3} p={2}>
                                                         <h6 className='text-light-grey text-center'>No Product Available...!</h6>
                                                     </Box>
@@ -94,7 +98,7 @@ const SingleCategory = ({ category, products }) => {
                                                                     <Typography variant='h3' gutterBottom><Link href={`product/${product.permalink}`} legacyBehavior><a className='text-pestal-purple'>{product.name}</a></Link></Typography>
                                                                     <Typography variant='h4'><del className='text-light-grey'>₹ {product.price.raw + 200}</del> <span className='text-pestal-purple'>{product.price.formatted_with_symbol}</span></Typography>
                                                                     <Box mt={3}>
-                                                                        <PurpleFilledBtn navlink={true} btnlink="/cart/" btntitle="ADD TO CART" />
+                                                                        <Button onClick={() => addToCart(product.id)}>ADD TO CART</Button>
                                                                     </Box>
                                                                 </Grid>
                                                             </Grid>

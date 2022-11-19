@@ -21,7 +21,7 @@ export const getServerSideProps = async () => {
 const index = ({ merchant, products, categories }) => {
   const { setCart } = useCartDispatch()
 
-    const addToCart = (productId) =>  commerce.cart.add(productId).then(({cart})=>setCart(cart))
+    const addToCart = (productId) =>  commerce.cart.add(productId, 1).then(({cart})=>setCart(cart))
   return (
     <>
       <Head>

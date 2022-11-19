@@ -5,8 +5,13 @@ import Link from 'next/link'
 import React from 'react'
 import Logo from '../../../../public/logo/logo.webp'
 import Styles from '../../../../styles/Header.module.css'
+import { useCartState } from '../../../../context/cart';
+
 
 const Topbar = () => {
+    const  {total_unique_items}  = useCartState();
+
+    console.log(total_unique_items)
     return (
         <>
             <Container maxWidth="xxl" className='d-none d-lg-block py-2'>
@@ -38,7 +43,7 @@ const Topbar = () => {
                                 <Grid item lg={1}>
                                     <IconButton>
                                         <Link href="/cart/">
-                                            <Badge color='secondary' badgeContent="4">
+                                            <Badge color='secondary' badgeContent={total_unique_items}>
                                                 <LocalMallOutlined className='text-light-grey' />
                                             </Badge>
                                         </Link>
