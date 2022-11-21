@@ -7,13 +7,15 @@ import Logo from '../../../../public/logo/logo.webp'
 import TransparentLogo from '../../../../public/logo/logo.png'
 import Image from 'next/legacy/image';
 import { useCartState } from '../../../../context/cart';
+import { useRouter } from 'next/router';
 
 
-const Navbar = () => {
+const Navbar = ({ cart }) => {
     const [width, setWidth] = useState();
     const [open, setOpen] = useState(false)
+    const router = useRouter()
 
-    const  {total_unique_items}  = useCartState();
+    const { total_unique_items } = useCartState();
 
     useEffect(() => {
         setWidth(window.innerWidth)
@@ -88,15 +90,15 @@ const Navbar = () => {
                                         </a>
                                     </Link>
                                 </Grid>
-                                <Grid item xs={2}>
+                                {router.pathname !== '/checkout' ? <Grid item xs={2}>
                                     <IconButton>
-                                        <Link href="/cart/">
+                                        <a href="/cart/">
                                             <Badge color='secondary' badgeContent={total_unique_items}>
                                                 <LocalMallOutlined className='text-dark-grey' />
                                             </Badge>
-                                        </Link>
+                                        </a>
                                     </IconButton>
-                                </Grid>
+                                </Grid> : null}
                             </Grid>
                         </Container>
                         {

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import commerce from '../../lib/commerce'
 import Link from 'next/link';
 import Image from 'next/image';
-import { Divider, Container, Grid, Box, Typography, IconButton } from '@mui/material'
+import { Divider, Container, Grid, Box, Typography, IconButton, Button } from '@mui/material'
 import { Apps, ViewList } from '@mui/icons-material';
 import { ProductCard, PurpleFilledBtn } from '../../components/components';
 import { useCartDispatch } from '../../context/cart'

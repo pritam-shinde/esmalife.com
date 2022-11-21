@@ -1,12 +1,12 @@
 import React from 'react'
 import { Topbar, Navbar } from './components/components'
 
-const Header = () => {
+const Header = ({cart}) => {
   return (
     <>
       <header>
-        <Topbar />
-        <Navbar />
+        <Topbar cart={cart} />
+        <Navbar cart={cart} />
       </header>
     </>
   )

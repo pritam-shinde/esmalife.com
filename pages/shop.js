@@ -1,9 +1,9 @@
-import { Box, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Container, Divider, Grid, IconButton, Typography,Button } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import commerce from '../lib/commerce';
-import { ProductCard, PurpleFilledBtn } from '../components/components'
+import { ProductCard} from '../components/components'
 import { Apps, ViewList } from '@mui/icons-material';
 import Image from 'next/image';
 import { useCartDispatch } from '../context/cart'
