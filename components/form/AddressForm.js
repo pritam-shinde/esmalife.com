@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { InputLabel, Select, MenuItem, Button, Grid, Typography, Box } from '@mui/material'
 import { useForm, FormProvider } from 'react-hook-form'
 import { CustomTextField } from '../components'
+import commerce from '../../lib/commerce'
 
-import  commerce  from '../../lib/commerce'
-
-const AddressForm = () => {
+const AddressForm = ({ checkoutToken, next }) => {
     const [shippingCountries, setShippingCountries] = useState([])
     const [shippingCountry, setShippingCountry] = useState('')
     const [shippingSubdivisions, setShippingSubdivisions] = useState([])
@@ -14,53 +13,112 @@ const AddressForm = () => {
     const [shippingOption, setShippingOption] = useState("")
     const methods = useForm()
 
+    const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
+    const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }))
+    const options = shippingOptions.map((sO) => ({ id: sO.id, label: `${sO.description} - ${sO.price.formatted_with_symbol}` }))
+
+
     const fetchShippingCountries = async (checkoutTokenId) => {
-        const {contries} = await commerce.services.localeListCountries(checkoutTokenId);
-        setShippingCountries(contries)
+        const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+        setShippingCountries(countries);
+        setShippingCountry(Object.keys(countries)[0])
     }
 
-    const handleFormSubmit = () => {
-
+    const fetchShippingSubdivisions = async (checkoutTokenId, countryCode) => {
+        try {
+            const { subdivisions } = await commerce.services.localeListShippingSubdivisions(checkoutTokenId, countryCode);
+            setShippingSubdivisions(subdivisions)
+            setShippingSubdivision(Object.keys(subdivisions)[0])
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+    const fetchShippingOptions = async (checkTokenId, country, region=subdivision) => {
+        try {
+            const options = await commerce.checkout.getShippingOptions(checkTokenId, { country, region });
+            setShippingOptions(options);
+            setShippingOption(options[0].id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        if (checkoutToken !== null) {
+            fetchShippingCountries(checkoutToken.id)
+        }
+    }, [checkoutToken])
+
+    useEffect(() => {
+        if (checkoutToken !== null) {
+            if (shippingCountry !== null || shippingCountry !== "" || shippingCountry !== undefined) {
+                fetchShippingSubdivisions(checkoutToken.id, shippingCountry)
+            }
+        }
+    }, [checkoutToken, shippingCountry])
+
+    useEffect(() => {
+        if (checkoutToken !== null) {
+            if (shippingCountry !== "" && shippingSubdivision !== "") {
+                fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision)
+            }
+        }
+
+    }, [checkoutToken, shippingCountry, shippingSubdivision])
 
     return (
         <>
             <Box p={2}>
                 <Typography variant='h4' className='mb-3'>Shipping Address</Typography>
                 <FormProvider {...methods}>
-                    <form onSubmit={handleFormSubmit}>
+                    <form onSubmit={methods.handleSubmit(data=> {next({...data, shippingCountry, shippingSubdivision, shippingOption})})}>
                         <Grid container spacing={2}>
-                            <CustomTextField required name="firstname" label='First Name' />
-                            <CustomTextField required name="lastname" label='Last Name' />
-                            <CustomTextField required name="address1" label='Address' />
-                            <CustomTextField required name="email" label='Email' />
-                            <CustomTextField required name="city" label='City' />
-                            <CustomTextField required name="zip" label='ZIP / Postal Address' />
-                            {/* <Grid item xs={12} sm={6}>
+                            <CustomTextField name="firstname" label='First Name' />
+                            <CustomTextField name="lastname" label='Last Name' />
+                            <CustomTextField name="address1" label='Address' />
+                            <CustomTextField name="email" label='Email' />
+                            <CustomTextField name="phone" label='Phone No.' />
+                            <CustomTextField name="city" label='City' />
+                            <CustomTextField name="zip" label='ZIP / Postal Address' />
+                            <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Country</InputLabel>
-                                <Select value={ } fullWidth onChange={ }>
-                                    <MenuItem key={ } value={ }>
-                                        Select Me
-                                    </MenuItem>
+                                <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
+                                    {
+                                        countries.map(country => <MenuItem key={country.id} value={country.id}>
+                                            {
+                                                country.label
+                                            }
+                                        </MenuItem>)
+                                    }
                                 </Select>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Subdivision</InputLabel>
-                                <Select value={ } fullWidth onChange={ }>
-                                    <MenuItem key={ } value={ }>
-                                        Select Me
-                                    </MenuItem>
+                                <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)}>
+                                    {
+                                        subdivisions.map(subdivision => <MenuItem key={subdivision.id} value={subdivision.id}>
+                                            {subdivision.label}
+                                        </MenuItem>)
+                                    }
                                 </Select>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Options</InputLabel>
-                                <Select value={ } fullWidth onChange={ }>
-                                    <MenuItem key={ } value={ }>
-                                        Select Me
-                                    </MenuItem>
+                                <Select value={shippingOption} fullWidth onChange={(e) => e.target.value}>
+                                    {
+                                        options.map(item => <MenuItem key={item.id} value={item.id}>
+                                            {item.label}
+                                        </MenuItem>)
+                                    }
                                 </Select>
-                            </Grid> */}
+                            </Grid>
                         </Grid>
+                        <br />
+                        <Box className='d-flex justify-content-between'>
+                            <Button variant='outlined'><a href="/cart/">BACK TO CART</a></Button>
+                            <Button type="submit" variant='contained'>NEXT</Button>
+                        </Box>
                     </form>
                 </FormProvider>
             </Box>

@@ -5,24 +5,32 @@ import Link from 'next/link'
 import Styles from '../styles/Checkout.module.css'
 import { AddressForm, PaymentForm } from '../components/components'
 import commerce from '../lib/commerce'
-import { useCartState } from '../context/cart'
+import { useCartState, useCartDispatch } from '../context/cart'
+import { useRouter } from 'next/router'
 
 const checkout = () => {
     const [activeStep, setActiveStep] = useState(0)
     const [checkoutToken, setCheckoutToken] = useState(null)
+    const [shippingData, setShippingData] = useState({})
+    const [order, setOrder] = useState({});
+    const [errorMessage, setErrorMessage] = useState("")
+    const { setCart } = useCartDispatch()
     const steps = ['Shiping Address', 'Payment Details']
+    const router = useRouter()
+
+    const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
 
     const cart = useCartState();
 
     useEffect(() => {
         const generateToken = async () => {
-            if(cart){
+            if (cart.id != undefined && cart.id) {
                 try {
-                    const token = await commerce.checkout.generateToken(cart.id, {type:'cart'});
-                    console.log(token)
+                    const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
                     setCheckoutToken(token)
                 } catch (error) {
-                    console.log(error)
+                    setErrorMessage(error.data.error.message)
                 }
             }
         }
@@ -30,13 +38,54 @@ const checkout = () => {
         generateToken()
     }, [cart])
 
-    const Form = () => activeStep === 0 ? <AddressForm checkoutToken={checkoutToken} /> : <PaymentForm />
+    const handleRefreshCart = async () => {
+        const newCart = await commerce.cart.refresh()
+
+        setCart(newCart)
+    }
+
+    const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+        try {
+            const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+            setOrder(incomingOrder)
+            handleRefreshCart()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const next = (data) => {
+        setShippingData(data)
+        nextStep()
+    }
 
     const Confirmation = () => {
         return (<>
-            Confirmation
+            {
+                order.customer ? <>
+                    <Box p={2} className="d-flex flex-column align-items-center">
+                        <Typography variant="h5">Thank You For Your Purchase {order.customer.firstname} {order.customer.lastname}</Typography>
+                        <Divider />
+                        <Box mt={3}>
+                            <Button><Link href="/">BACK TO HOME</Link></Button>
+                        </Box>
+                    </Box>
+                </> : <>
+                    <Box mt={2} className="d-flex justify-content-center">
+                        <CircularProgress />
+                    </Box>
+                </>
+            }
         </>)
     }
+
+
+
+    if (errorMessage) {
+        router.push('/')
+    }
+
+    const Form = () => activeStep === 0 ? <AddressForm checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} next={next} /> : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} backStep={backStep} handleCaptureCheckout={handleCaptureCheckout} error={errorMessage} nextStep={nextStep} />
 
     return (
         <>
@@ -80,7 +129,7 @@ const checkout = () => {
                                                         }
                                                     </Stepper>
                                                     {
-                                                        activeStep == steps.length ? <Confirmation /> : <Form />
+                                                        activeStep == steps.length ? <Confirmation /> : checkoutToken && <Form />
                                                     }
                                                 </Box>
                                             </Grid>

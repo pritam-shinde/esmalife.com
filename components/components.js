@@ -17,3 +17,5 @@ export {default as PaymentForm} from './form/PaymentForm'
 
 //inputfield
 export {default as CustomTextField} from './inputfield/CustomTextField'
+
+export {default as Review} from './Review'
