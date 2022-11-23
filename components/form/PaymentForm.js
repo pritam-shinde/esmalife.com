@@ -9,6 +9,9 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
 const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheckout, error, nextStep }) => {
 
+  const shppingMethod = checkoutToken.shipping_methods.filter(entries=>entries.id === shippingData.shippingOption
+    )
+
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
 
@@ -44,7 +47,7 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheck
 
   return (
     <>
-      <Review checkoutToken={checkoutToken} />
+      <Review checkoutToken={checkoutToken} shippingData={shippingData} />
       <Divider />
       <Box p={2}>
         <Typography variant='h5' gutterBottom style={{ margin: "1.2rem 0" }}>Payment Methods</Typography>
@@ -56,8 +59,8 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheck
                   <CardElement />
                   <br /><br /><br />
                   <Box className='d-flex justify-content-between'>
-                    <Button variant='outlined' onClick={() => backStep()}>BACK TO CART</Button>
-                    <Button type="submit" variant='contained' disabled={!stripe}>PAY {checkoutToken.subtotal.formatted_with_symbol}</Button>
+                    <Button variant='outlined' onClick={() => backStep()}>BACK</Button>
+                    <Button type="submit" variant='contained' disabled={!stripe}>PAY ₹ {checkoutToken.subtotal.raw + shppingMethod[0].price.raw}</Button>
                   </Box>
                 </form>
               )

@@ -8,13 +8,15 @@ import Image from 'next/image';
 import { PurpleFilledBtn, PurpleOutlinedButton } from '../components/components';
 import commerce from '../lib/commerce';
 import emptyCart from '../public/cart/empty-cart.svg'
+import Styles from '../styles/Button.module.css'
 
-const cart = () => {
-  const { line_items, subtotal } = useCartState()
+const Cart = () => {
+  const { line_items, subtotal, total_items } = useCartState()
   const isEmpty = line_items.length === 0
   const { setCart } = useCartDispatch()
   const { cart } = useCartState()
 
+  console.log(useCartState())
 
   const handleUpdateCart = (cart) => {
     setCart(cart)
@@ -116,7 +118,7 @@ const cart = () => {
                         </Box>
                         <Divider style={{ background: "#000" }} />
                         <Box mt={3}>
-                          <Button onClick={handleCartEmpty}>MAKE CART EMPTY</Button>
+                          <Button className={Styles.PurpleOutlinedButton} onClick={handleCartEmpty}>MAKE CART EMPTY</Button>
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={4}>
@@ -129,16 +131,8 @@ const cart = () => {
                                 <td className='text-end'>{subtotal.formatted_with_symbol}</td>
                               </tr>
                               <tr>
-                                <td>Shipping Charges</td>
-                                <td className='text-end'>₹ 0</td>
-                              </tr>
-                              <tr className='border-top'>
-                                <th>
-                                  Total Amount
-                                </th>
-                                <th className='text-end'>
-                                  {subtotal.formatted_with_symbol}
-                                </th>
+                                <td>Discount On MRP</td>
+                                <td className='text-end'><del>₹ {total_items * 200}</del></td>
                               </tr>
                             </table>
                           </Box>
@@ -159,4 +153,4 @@ const cart = () => {
   )
 }
 
-export default cart
+export default Cart

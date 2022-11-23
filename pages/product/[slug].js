@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useState } from 'react'
 import commerce from '../../lib/commerce'
 import { useRouter } from 'next/router'
 import { Container, Grid, Box, Divider, Typography, IconButton, Button } from '@mui/material'
@@ -12,7 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper";
 import Image from 'next/legacy/image'
-import { useCartDispatch } from '../../context/cart'
+import { useCartDispatch, useCartState } from '../../context/cart'
 
 export const getServerSideProps = async ({ params }) => {
     const { slug } = params
@@ -25,12 +25,14 @@ export const getServerSideProps = async ({ params }) => {
 }
 
 const SingleProduct = ({ product }) => {
+    const [quantity, SetQuantity] = useState(1)
     const router = useRouter()
     const { slug } = router.query;
 
-    const { setCart } = useCartDispatch()
+    const { setCart } = useCartDispatch();
+    const { cart } = useCartState()
 
-    const addToCart = (productId) => commerce.cart.add(productId).then(({ cart }) => setCart(cart))
+    const addToCart = (productId, quantity) => commerce.cart.add(productId, quantity).then(({ cart }) => setCart(cart))
 
     return (
         <>
@@ -97,12 +99,12 @@ const SingleProduct = ({ product }) => {
                                                 <Typography className={Styles.prodPrice}><del className='text-light-grey'>₹{product.price.raw + 200}</del> <span className='text-pestal-purple'>{product.price.formatted_with_symbol}</span></Typography>
                                                 <Box mt={3} className="d-flex align-items-center">
                                                     <Box mr={3}>
-                                                        <IconButton className='border rounded-circle mx-2'><Remove /></IconButton>
-                                                        <strong>1</strong>
-                                                        <IconButton className='border rounded-circle mx-2'><Add /></IconButton>
+                                                        <IconButton className='border rounded-circle mx-2' onClick={() => { if (quantity > 1) SetQuantity(quantity - 1) }}><Remove /></IconButton>
+                                                        <strong>{quantity}</strong>
+                                                        <IconButton className='border rounded-circle mx-2' onClick={() => SetQuantity(quantity + 1)}><Add /></IconButton>
                                                     </Box>
                                                     <Box>
-                                                        <Button onClick={() => addToCart(product.id)}>ADD TO CART</Button>
+                                                        <Button onClick={() => addToCart(product.id, quantity)}>ADD TO CART</Button>
                                                     </Box>
                                                 </Box>
                                                 <Box className={Styles.description} mt={3} dangerouslySetInnerHTML={{ __html: product ? product.description ? product.description : "" : null }} />

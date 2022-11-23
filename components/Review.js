@@ -1,7 +1,10 @@
 import React from 'react'
 import { Typography, List, ListItem, ListItemText, Box } from '@mui/material'
 
-const Review = ({ checkoutToken }) => {
+const Review = ({ checkoutToken, shippingData }) => {
+    const shppingMethod = checkoutToken.shipping_methods.filter(entries=>entries.id === shippingData.shippingOption
+        )
+
     return (
         <>
              <Box p={2}>
@@ -14,8 +17,12 @@ const Review = ({ checkoutToken }) => {
                         </ListItem>)
                     }
                     <ListItem style={{ padding: "10px 0" }}>
+                    <ListItemText primary="Shipping Charges"/>
+                    <Typography variant='subtitle1' style={{fontWeight: 700}}>{shppingMethod[0].price.formatted_with_symbol}</Typography>
+                    </ListItem>
+                    <ListItem style={{ padding: "10px 0" }}>
                     <ListItemText primary="Total"/>
-                    <Typography variant='subtitle1' style={{fontWeight: 700}}>{checkoutToken.subtotal.formatted_with_symbol}</Typography>
+                    <Typography variant='subtitle1' style={{fontWeight: 700}}>₹ {checkoutToken.subtotal.raw + shppingMethod[0].price.raw}</Typography>
                     </ListItem>
                 </List>
             </Box> 
