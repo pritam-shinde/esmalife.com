@@ -1,15 +1,25 @@
-import { Search, LocalMallOutlined } from '@mui/icons-material'
-import { Container, Grid, Box, IconButton, Badge, TextField } from '@mui/material'
+import { Search, LocalMallOutlined, Person } from '@mui/icons-material'
+import { Container, Grid, Box, IconButton, Badge, TextField, Avatar } from '@mui/material'
 import Image from 'next/legacy/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../../../../public/logo/logo.webp'
 import Styles from '../../../../styles/Header.module.css'
-import { useCartState } from '../../../../context/cart';
+import { useRouter } from 'next/router'
+import { useSelector, useDispatch } from 'react-redux'
+import { retriveCart } from '../../../../redux/action/cartActions'
 
 
 const Topbar = () => {
-    const  {total_unique_items}  = useCartState();
+    const [customerAvatar, setCustomerAvatar] = useState(null)
+    const router = useRouter()
+
+    const cart = useSelector((state) => state.setCartReducer.cart)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(retriveCart())
+    })
 
     return (
         <>
@@ -27,10 +37,10 @@ const Topbar = () => {
                                         </Link>
                                     </Box>
                                 </Grid>
-                                <Grid item lg={7}>
+                                <Grid item lg={6}>
                                     <Box>
                                         <form>
-                                            <Box style={{position:"relative"}}>
+                                            <Box style={{ position: "relative" }}>
                                                 <TextField id="filledbasic" className='border-0' label="Search here..." variant="filled" fullWidth required />
                                                 <IconButton type='submit' id="searchButton">
                                                     <Search />
@@ -39,14 +49,21 @@ const Topbar = () => {
                                         </form>
                                     </Box>
                                 </Grid>
-                                <Grid item lg={1}>
-                                    <IconButton>
-                                        <a href="/cart/">
-                                            <Badge color='secondary' badgeContent={total_unique_items}>
+                                <Grid item lg={2}>
+                                    <IconButton onClick={() => router.push('/cart/')}>
+                                            <Badge color='secondary' badgeContent={cart ? cart.total_items ? cart.total_items : 0 : 0}>
                                                 <LocalMallOutlined className='text-light-grey' />
                                             </Badge>
-                                        </a>
                                     </IconButton>
+                                    {
+                                        customerAvatar == null ? <IconButton>
+                                            <Person />
+                                        </IconButton> : <IconButton>
+                                            <Avatar style={{ height: "2rem", width: "2rem" }}>
+
+                                            </Avatar>
+                                        </IconButton>
+                                    }
                                 </Grid>
                             </Grid>
                         </Box>

@@ -5,32 +5,38 @@ import Link from 'next/link'
 import Styles from '../styles/Checkout.module.css'
 import { AddressForm, PaymentForm } from '../components/components'
 import commerce from '../lib/commerce'
-import { useCartState, useCartDispatch } from '../context/cart'
 import { useRouter } from 'next/router'
+import { useSelector, useDispatch } from 'react-redux'
+import { retriveCart, handleCartRefresh } from '../redux/action/cartActions'
 
 const checkout = () => {
+    const cart = useSelector((state) => state.setCartReducer.cart)
+    const dispatch = useDispatch()
     const [activeStep, setActiveStep] = useState(0)
     const [checkoutToken, setCheckoutToken] = useState(null)
     const [shippingData, setShippingData] = useState({})
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState("")
-    const { setCart } = useCartDispatch()
     const steps = ['Shiping Address', 'Payment Details']
     const router = useRouter()
+
+    useEffect(() => {
+        dispatch(retriveCart())
+    }, [dispatch])
 
     const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
     const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
 
-    const cart = useCartState();
-
     useEffect(() => {
         const generateToken = async () => {
-            if (cart.id != undefined && cart.id) {
-                try {
-                    const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-                    setCheckoutToken(token)
-                } catch (error) {
-                    setErrorMessage(error.data.error.message)
+            if (cart) {
+                if (cart.id != undefined && cart.id) {
+                    try {
+                        const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
+                        setCheckoutToken(token)
+                    } catch (error) {
+                        setErrorMessage(error.data.error.message)
+                    }
                 }
             }
         }
@@ -39,9 +45,7 @@ const checkout = () => {
     }, [cart])
 
     const handleRefreshCart = async () => {
-        const newCart = await commerce.cart.refresh()
-
-        setCart(newCart)
+        dispatch(handleCartRefresh())
     }
 
     const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
@@ -79,13 +83,11 @@ const checkout = () => {
         </>)
     }
 
-
-
     if (errorMessage) {
         router.push('/')
     }
 
-    const Form = () => activeStep === 0 ? <AddressForm checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} next={next} /> : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} backStep={backStep} handleCaptureCheckout={handleCaptureCheckout} error={errorMessage} nextStep={nextStep} />
+    const Form = () => activeStep === 0 && checkoutToken ? <AddressForm checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} next={next} /> : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} backStep={backStep} handleCaptureCheckout={handleCaptureCheckout} error={errorMessage} nextStep={nextStep} />
 
     return (
         <>

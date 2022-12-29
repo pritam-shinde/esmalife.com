@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import commerce from '../../lib/commerce'
 import { useRouter } from 'next/router'
 import { Container, Grid, Box, Divider, Typography, IconButton, Button } from '@mui/material'
@@ -12,27 +12,26 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper";
 import Image from 'next/legacy/image'
-import { useCartDispatch, useCartState } from '../../context/cart'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchSingleProduct, removeSelectedProduct } from '../../redux/action/productAction'
+import {addToCart} from '../../redux/action/cartActions'
 
-export const getServerSideProps = async ({ params }) => {
-    const { slug } = params
-    const product = await commerce.products.retrieve(slug, { type: 'permalink' })
-    return {
-        props: {
-            product,
-        }
-    }
-}
-
-const SingleProduct = ({ product }) => {
+const SingleProduct = () => {
     const [quantity, SetQuantity] = useState(1)
     const router = useRouter()
     const { slug } = router.query;
 
-    const { setCart } = useCartDispatch();
-    const { cart } = useCartState()
+    const product = useSelector((state) => state.setProductReducer.selectedSingleProduct)
+    const dispatch = useDispatch()
 
-    const addToCart = (productId, quantity) => commerce.cart.add(productId, quantity).then(({ cart }) => setCart(cart))
+    useEffect(() => {
+        if (slug !== '' || slug !== null || slug !== undefined) {
+            dispatch(fetchSingleProduct(slug))
+        }
+        return (() => {
+            dispatch(removeSelectedProduct())
+        })
+    },[slug, dispatch])
 
     return (
         <>
@@ -96,7 +95,7 @@ const SingleProduct = ({ product }) => {
                                                 <Box mb={2}>
                                                     <Star className='text-pestal-purple' /><Star className='text-pestal-purple' /><Star className='text-pestal-purple' /><Star className='text-pestal-purple' /><Star className='text-pestal-purple' />
                                                 </Box>
-                                                <Typography className={Styles.prodPrice}><del className='text-light-grey'>₹{product.price.raw + 200}</del> <span className='text-pestal-purple'>{product.price.formatted_with_symbol}</span></Typography>
+                                                <Typography className={Styles.prodPrice}><del className='text-light-grey'>₹{product.price ? product.price.raw ? product.price.raw + 200 : "" : ""}</del> <span className='text-pestal-purple'>{product.price ? product.price.formatted_with_symbol ? product.price.formatted_with_symbol : "" : ""}</span></Typography>
                                                 <Box mt={3} className="d-flex align-items-center">
                                                     <Box mr={3}>
                                                         <IconButton className='border rounded-circle mx-2' onClick={() => { if (quantity > 1) SetQuantity(quantity - 1) }}><Remove /></IconButton>
@@ -104,7 +103,7 @@ const SingleProduct = ({ product }) => {
                                                         <IconButton className='border rounded-circle mx-2' onClick={() => SetQuantity(quantity + 1)}><Add /></IconButton>
                                                     </Box>
                                                     <Box>
-                                                        <Button onClick={() => addToCart(product.id, quantity)}>ADD TO CART</Button>
+                                                        <Button onClick={() => dispatch(addToCart(product.id, quantity))}>ADD TO CART</Button>
                                                     </Box>
                                                 </Box>
                                                 <Box className={Styles.description} mt={3} dangerouslySetInnerHTML={{ __html: product ? product.description ? product.description : "" : null }} />

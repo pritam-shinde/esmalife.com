@@ -1,33 +1,27 @@
 import { Box, Container, Divider, Grid, IconButton, Typography,Button } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
-import React, {useState } from 'react'
-import commerce from '../lib/commerce';
+import React, {useState, useEffect } from 'react'
 import { ProductCard} from '../components/components'
 import { Apps, ViewList } from '@mui/icons-material';
 import Image from 'next/image';
-import { useCartDispatch } from '../context/cart'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllProducts } from '../redux/action/productAction'
+import {addToCart} from '../redux/action/cartActions'
 
-export const getServerSideProps = async () => {
-    let { data: products } = await commerce.products.list();
-
-    if (products == undefined) {
-        products = null
-    }
-
-    return {
-        props: {
-            products,
-        }
-    }
-}
-
-const shop = ({ products }) => {
+const shop = () => {
     const [productView, setProductView] = useState('grid')
+    const products = useSelector((state)=> state.setProductReducer.allProducts)
+    const dispatch = useDispatch()
 
-    const { setCart } = useCartDispatch()
+    useEffect(() => {
+        dispatch(fetchAllProducts())
+      }, [dispatch])
 
-    const addToCart = (productId) => commerce.cart.add(productId).then(({ cart }) => setCart(cart))
+      const handleAddToCart = (productId, quantity) =>{
+        dispatch(addToCart(productId, quantity))
+      }
+
 
     return (
         <>
@@ -75,7 +69,7 @@ const shop = ({ products }) => {
                                             productView === 'grid' ? <Grid container spacing={5}>
                                                 {
                                                     products !== null ? products.map(product => <Grid key={product.id} item xs={12} sm={6} lg={4}>
-                                                        <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} addToCart={addToCart} productId={product.id} />
+                                                        <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} addToCart={handleAddToCart} productId={product.id} />
                                                     </Grid>) : <Box mt={3} p={2}>
                                                         <h6 className='text-light-grey text-center'>No Product Available...!</h6>
                                                     </Box>
@@ -92,7 +86,7 @@ const shop = ({ products }) => {
                                                                     <Typography variant='h3' gutterBottom><Link href={`product/${product.permalink}`} legacyBehavior><a className='text-pestal-purple'>{product.name}</a></Link></Typography>
                                                                     <Typography variant='h4'><del className='text-light-grey'>₹ {product.price.raw + 200}</del> <span className='text-pestal-purple'>{product.price.formatted_with_symbol}</span></Typography>
                                                                     <Box mt={3}>
-                                                                        <Button onClick={() => addToCart(product.id)}>ADD TO CART</Button>
+                                                                        <Button onClick={() => dispatch(addToCart(product.id, 1))}>ADD TO CART</Button>
                                                                     </Box>
                                                                 </Grid>
                                                             </Grid>

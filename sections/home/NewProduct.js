@@ -6,12 +6,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper";
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllProducts } from '../../redux/action/productAction'
+import {addToCart} from '../../redux/action/cartActions'
 
-
-const NewProduct = ({ products, addToCart }) => {
+const NewProduct = () => {
     const [width, setWidth] = useState();
     const [hydration, setHydration] = useState(false)
     const [slideCount, setSlideCount] = useState(1)
+
+    const allProducts = useSelector((state)=> state.setProductReducer.allProducts)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchAllProducts())
+      }, [dispatch])
     
 
     useEffect(() => {
@@ -39,7 +48,9 @@ const NewProduct = ({ products, addToCart }) => {
         }
     }, [width])
 
-    
+    const handleAddToCart=(productId, quantity)=>{
+        dispatch(addToCart(productId, quantity))
+    }
 
 
     return (
@@ -68,8 +79,8 @@ const NewProduct = ({ products, addToCart }) => {
                                             className="px-lg-5 px-0"
                                         >
                                             {
-                                                products ? products.map(product => <SwiperSlide key={product.id}>
-                                                    <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} addToCart={addToCart} productId={product.id} />
+                                                allProducts ? allProducts.map(product => <SwiperSlide key={product.id}>
+                                                    <ProductCard image={product.image.url} permalink={`product/${product.permalink}`} name={product.name} raw={product.price.raw} price={product.price.formatted_with_symbol} addToCart={handleAddToCart} productId={product.id} />
                                                 </SwiperSlide>) : "Loading..."
                                             }
                                         </Swiper>

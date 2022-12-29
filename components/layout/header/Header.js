@@ -1,12 +1,12 @@
 import React from 'react'
 import { Topbar, Navbar } from './components/components'
 
-const Header = ({cart}) => {
+const Header = () => {
   return (
     <>
-      <header>
-        <Topbar cart={cart} />
-        <Navbar cart={cart} />
+      <header className='fixed-top bg-white shadow-lg'>
+        <Topbar />
+        <Navbar />
       </header>
     </>
   )

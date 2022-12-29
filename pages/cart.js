@@ -1,46 +1,26 @@
 import Head from 'next/head'
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Remove, Add, Close } from '@mui/icons-material'
-import { Box, Button, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
-import { useCartDispatch, useCartState } from '../context/cart';
+import { Box, Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import Image from 'next/image';
-import { PurpleFilledBtn, PurpleOutlinedButton } from '../components/components';
-import commerce from '../lib/commerce';
+import { PurpleFilledBtn} from '../components/components';
 import emptyCart from '../public/cart/empty-cart.svg'
 import Styles from '../styles/Button.module.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { retriveCart, updateCart, removeProductFromCart, makeCartEmpty } from '../redux/action/cartActions'
 
 const Cart = () => {
-  const { line_items, subtotal, total_items } = useCartState()
-  const isEmpty = line_items.length === 0
-  const { setCart } = useCartDispatch()
-  const { cart } = useCartState()
+  const cart = useSelector((state) => state.setCartReducer.cart)
+  const dispatch = useDispatch();
 
-  console.log(useCartState())
-
-  const handleUpdateCart = (cart) => {
-    setCart(cart)
-  }
-
-  const removeItem = async (id) => {
-    await commerce.cart.remove(id).then(handleUpdateCart)
-  }
-
-  const decreaseQuantity = async (productId, quantity) => {
-    quantity > 1 ? await commerce.cart.update(productId, { quantity: quantity - 1 }).then(handleUpdateCart) : quantity == 1 ? removeItem(productId) : null
-  }
-
-  const increaseQuantity = (productId, quantity) => {
-    commerce.cart.update(productId, { quantity: quantity + 1 }).then(handleUpdateCart)
-  }
-
-  const handleCartEmpty = async () => {
-    await commerce.cart.empty().then(handleUpdateCart)
-  }
+  useEffect(() => {
+    dispatch(retriveCart())
+  }, [dispatch])
 
   return (
     <>
-      <Head>
+       <Head>
         <title>Cart - esmalife.com</title>
       </Head>
       <main>
@@ -69,7 +49,7 @@ const Cart = () => {
                 <Typography variant='h1' align='center' className='text-pestal-purple'>CART</Typography>
                 <Box py={3}>
                   {
-                    isEmpty ? <Box p={3} className="d-flex flex-column align-items-center">
+                    cart ? cart.line_items ? cart.line_items.length  < 1 ? <Box p={3} className="d-flex flex-column align-items-center">
                       <Image src={emptyCart} alt="empty cart" height="200" width="200" />
                       <Typography variant='h5' align="center">Hey, it feels so light!</Typography>
                       <Typography variant="h6" align="center">There is nothing in your bag. Let's add some items.</Typography>
@@ -81,10 +61,10 @@ const Cart = () => {
                         <Box>
                           <Grid container>
                             {
-                              line_items.map(item => <Grid item xs={12} key={item.id} className="mb-3">
+                              cart? cart.line_items ? cart.line_items.map(item => <Grid item xs={12} key={item.id} className="mb-3">
                                 <Box p={3} className='border rounded-3'>
                                   <Box mb={1} className="d-flex justify-content-end">
-                                    <IconButton onClick={() => removeItem(item.id)}>
+                                    <IconButton onClick={() => dispatch(removeProductFromCart(item.id))}>
                                       <Close />
                                     </IconButton>
                                   </Box>
@@ -101,9 +81,9 @@ const Cart = () => {
                                       <Box my={2} className="d-flex align-items-center">
                                         <Typography>Quantity:</Typography>
                                         <Box ml={3}>
-                                          <IconButton className='border rounded-circle mx-3' onClick={() => decreaseQuantity(item.id, item.quantity)}><Remove /></IconButton>
+                                          <IconButton className='border rounded-circle mx-3' onClick={() => dispatch(updateCart(item.id, Number(item.quantity) - 1))}><Remove /></IconButton>
                                           <strong>{item.quantity}</strong>
-                                          <IconButton className='border rounded-circle mx-3' onClick={() => increaseQuantity(item.id, item.quantity)}><Add /></IconButton>
+                                          <IconButton className='border rounded-circle mx-3' onClick={() => dispatch(updateCart(item.id, Number(item.quantity) + 1))}><Add /></IconButton>
                                         </Box>
                                       </Box>
                                       <Divider />
@@ -112,43 +92,43 @@ const Cart = () => {
                                     </Grid>
                                   </Grid>
                                 </Box>
-                              </Grid>)
+                              </Grid>) : null : null
                             }
                           </Grid>
                         </Box>
                         <Divider style={{ background: "#000" }} />
                         <Box mt={3}>
-                          <Button className={Styles.PurpleOutlinedButton} onClick={handleCartEmpty}>MAKE CART EMPTY</Button>
+                          <Button className={Styles.PurpleOutlinedButton} onClick={()=> dispatch(makeCartEmpty())}>MAKE CART EMPTY</Button>
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={4}>
-                        <Box>
-                          <Typography variant='h6' className='text-light-grey'>PRICE DETAILS ({line_items.length} Item)</Typography>
-                          <Box mt={3} className="table-responsive">
-                            <table className="table" cellSpacing={5}>
-                              <tr>
-                                <td>Total MRP</td>
-                                <td className='text-end'>{subtotal.formatted_with_symbol}</td>
-                              </tr>
-                              <tr>
-                                <td>Discount On MRP</td>
-                                <td className='text-end'><del>₹ {total_items * 200}</del></td>
-                              </tr>
-                            </table>
+                        <Box p={3} className='border rounded-3'>
+                          <Typography variant='h6' className='text-light-grey'>PRICE DETAILS ({cart ? cart.line_items? cart.line_items.length : null : null} Item)</Typography>
+                          <Box mt={3}>
+                            <List>
+                              <ListItem>
+                                <ListItemText primary="Discount On MRP" />
+                                <Typography><del>₹ {cart ? cart.total_items ? cart.total_items * 200 : null : null}</del></Typography>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemText primary={<strong>Subtotal</strong>} />
+                                <Typography><strong>{cart ? cart.subtotal.formatted_with_symbol ? cart.subtotal.formatted_with_symbol : null : null}</strong></Typography>
+                              </ListItem>
+                            </List>
                           </Box>
                           <Box mt={3}>
                             <PurpleFilledBtn btnlink="/checkout/" navlink={true} btntitle="PLACE ORDER" />
                           </Box>
                         </Box>
                       </Grid>
-                    </Grid>
+                    </Grid> : "Loading...." :  "Loading...."
                   }
                 </Box>
               </Grid>
             </Grid>
           </Container>
         </section>
-      </main>
+      </main> 
     </>
   )
 }

@@ -6,16 +6,21 @@ import Styles from '../../../../styles/Header.module.css'
 import Logo from '../../../../public/logo/logo.webp'
 import TransparentLogo from '../../../../public/logo/logo.png'
 import Image from 'next/legacy/image';
-import { useCartState } from '../../../../context/cart';
+import { useSelector, useDispatch } from 'react-redux'
+import { retriveCart } from '../../../../redux/action/cartActions'
 import { useRouter } from 'next/router';
 
-
-const Navbar = ({ cart }) => {
+const Navbar = () => {
     const [width, setWidth] = useState();
     const [open, setOpen] = useState(false)
+    const cart = useSelector((state) => state.setCartReducer.cart)
+    const dispatch = useDispatch()
+
     const router = useRouter()
 
-    const { total_unique_items } = useCartState();
+    useEffect(() => {
+        dispatch(retriveCart())
+    })
 
     useEffect(() => {
         setWidth(window.innerWidth)
@@ -91,12 +96,10 @@ const Navbar = ({ cart }) => {
                                     </Link>
                                 </Grid>
                                 {router.pathname !== '/checkout' ? <Grid item xs={2}>
-                                    <IconButton>
-                                        <a href="/cart/">
-                                            <Badge color='secondary' badgeContent={total_unique_items}>
+                                    <IconButton onClick={()=> router.push('/cart/')}>
+                                            <Badge color='secondary' badgeContent={cart ? cart.total_items ? cart.total_items : null : null }>
                                                 <LocalMallOutlined className='text-dark-grey' />
                                             </Badge>
-                                        </a>
                                     </IconButton>
                                 </Grid> : null}
                             </Grid>
