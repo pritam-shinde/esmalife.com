@@ -16,7 +16,7 @@ const shop = () => {
 
     useEffect(() => {
         dispatch(fetchAllProducts())
-      }, [dispatch])
+      }, [])
 
       const handleAddToCart = (productId, quantity) =>{
         dispatch(addToCart(productId, quantity))

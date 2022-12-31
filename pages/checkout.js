@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button, Grid, Container, Box } from '@mui/material'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -6,67 +6,40 @@ import Styles from '../styles/Checkout.module.css'
 import { AddressForm, PaymentForm } from '../components/components'
 import commerce from '../lib/commerce'
 import { useRouter } from 'next/router'
-import { useSelector, useDispatch } from 'react-redux'
-import { retriveCart, handleCartRefresh } from '../redux/action/cartActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { handleCartRefresh } from '../redux/action/cartActions'
+import { setAddressFormData, captureCheckout } from '../redux/action/checkoutActions'
 
 const checkout = () => {
-    const cart = useSelector((state) => state.setCartReducer.cart)
     const dispatch = useDispatch()
+    const order = useSelector((state) => state.setCheckoutReducer.incomingOrder)
     const [activeStep, setActiveStep] = useState(0)
-    const [checkoutToken, setCheckoutToken] = useState(null)
-    const [shippingData, setShippingData] = useState({})
-    const [order, setOrder] = useState({});
-    const [errorMessage, setErrorMessage] = useState("")
     const steps = ['Shiping Address', 'Payment Details']
     const router = useRouter()
 
-    useEffect(() => {
-        dispatch(retriveCart())
-    }, [dispatch])
-
     const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
     const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
-
-    useEffect(() => {
-        const generateToken = async () => {
-            if (cart) {
-                if (cart.id != undefined && cart.id) {
-                    try {
-                        const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-                        setCheckoutToken(token)
-                    } catch (error) {
-                        setErrorMessage(error.data.error.message)
-                    }
-                }
-            }
-        }
-
-        generateToken()
-    }, [cart])
 
     const handleRefreshCart = async () => {
         dispatch(handleCartRefresh())
     }
 
     const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
-        try {
-            const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
-            setOrder(incomingOrder)
+        dispatch(captureCheckout(checkoutTokenId, newOrder))
+        setTimeout(() => {
             handleRefreshCart()
-        } catch (error) {
-            console.log(error);
-        }
+        }, 5000)
     }
 
     const next = (data) => {
-        setShippingData(data)
+        dispatch(setAddressFormData(data))
         nextStep()
     }
 
     const Confirmation = () => {
         return (<>
             {
-                order.customer ? <>
+                order && order.customer ? <>
                     <Box p={2} className="d-flex flex-column align-items-center">
                         <Typography variant="h5">Thank You For Your Purchase {order.customer.firstname} {order.customer.lastname}</Typography>
                         <Divider />
@@ -83,11 +56,7 @@ const checkout = () => {
         </>)
     }
 
-    if (errorMessage) {
-        router.push('/')
-    }
-
-    const Form = () => activeStep === 0 && checkoutToken ? <AddressForm checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} next={next} /> : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken !== null || checkoutToken !== undefined ? checkoutToken : null} backStep={backStep} handleCaptureCheckout={handleCaptureCheckout} error={errorMessage} nextStep={nextStep} />
+    const Form = () => activeStep === 0 ? <AddressForm next={next} /> : <PaymentForm backStep={backStep} handleCaptureCheckout={handleCaptureCheckout} nextStep={nextStep} />
 
     return (
         <>
@@ -131,7 +100,7 @@ const checkout = () => {
                                                         }
                                                     </Stepper>
                                                     {
-                                                        activeStep == steps.length ? <Confirmation /> : checkoutToken && <Form />
+                                                        activeStep == steps.length ? <Confirmation /> : <Form />
                                                     }
                                                 </Box>
                                             </Grid>

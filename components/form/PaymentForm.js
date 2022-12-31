@@ -3,11 +3,13 @@ import { Typography, Button, Divider, Box } from '@mui/material';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Review } from '../components'
+import { useSelector, useDispatch } from 'react-redux';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
 
-const PaymentForm = ({ shippingData, checkoutToken, backStep, handleCaptureCheckout, error, nextStep }) => {
+const PaymentForm = ({ backStep, handleCaptureCheckout, nextStep }) => {
+  const {addressFormData:shippingData, checkoutToken } = useSelector(state=> state.setCheckoutReducer)
 
   const shppingMethod = checkoutToken.shipping_methods.filter(entries=>entries.id === shippingData.shippingOption
     )

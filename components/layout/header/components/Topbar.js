@@ -19,7 +19,7 @@ const Topbar = () => {
 
     useEffect(() => {
         dispatch(retriveCart())
-    })
+    },[])
 
     return (
         <>

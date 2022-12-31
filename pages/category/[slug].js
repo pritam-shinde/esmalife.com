@@ -27,7 +27,7 @@ const SingleCategory = () => {
         return (() => {
             dispatch(removeSelectedCategory())
         })
-    }, [slug, dispatch])
+    }, [slug])
 
     useEffect(() => {
         if (category && slug) {
@@ -37,7 +37,7 @@ const SingleCategory = () => {
         return (() => {
             dispatch(removeProductsByCategory())
         })
-    }, [slug, dispatch])
+    }, [slug])
 
     const handleAddToCart = (productId, quantity) =>{
         dispatch(addToCart(productId, quantity))

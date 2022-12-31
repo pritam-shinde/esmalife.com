@@ -20,7 +20,7 @@ const Navbar = () => {
 
     useEffect(() => {
         dispatch(retriveCart())
-    })
+    },[])
 
     useEffect(() => {
         setWidth(window.innerWidth)

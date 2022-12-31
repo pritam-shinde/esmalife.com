@@ -20,7 +20,7 @@ const NewProduct = () => {
 
     useEffect(() => {
         dispatch(fetchAllProducts())
-      }, [dispatch])
+      }, [])
     
 
     useEffect(() => {

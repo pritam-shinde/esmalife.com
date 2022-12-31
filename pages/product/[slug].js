@@ -31,7 +31,7 @@ const SingleProduct = () => {
         return (() => {
             dispatch(removeSelectedProduct())
         })
-    },[slug, dispatch])
+    },[slug])
 
     return (
         <>

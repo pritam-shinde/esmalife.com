@@ -16,7 +16,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(retriveCart())
-  }, [dispatch])
+  }, [])
 
   return (
     <>
@@ -64,7 +64,7 @@ const Cart = () => {
                               cart? cart.line_items ? cart.line_items.map(item => <Grid item xs={12} key={item.id} className="mb-3">
                                 <Box p={3} className='border rounded-3'>
                                   <Box mb={1} className="d-flex justify-content-end">
-                                    <IconButton onClick={() => dispatch(removeProductFromCart(item.id))}>
+                                    <IconButton onClick={() => {dispatch(removeProductFromCart(item.id))}}>
                                       <Close />
                                     </IconButton>
                                   </Box>
